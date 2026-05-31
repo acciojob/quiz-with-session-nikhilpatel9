@@ -7,7 +7,7 @@ const userAnswers = JSON.parse(sessionStorage.getItem('quizAnswers')) || [];
 questionsElement.addEventListener('change', (event) => {
     if (event.target.type === 'radio') {
         const nameParts = event.target.name.split('-');
-        const questionIndex = parseInt(nameParts, 10);
+        const questionIndex = parseInt(nameParts[1], 10);
         userAnswers[questionIndex] = event.target.value;
         sessionStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
     }
