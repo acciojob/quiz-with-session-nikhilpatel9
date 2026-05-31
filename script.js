@@ -1,7 +1,32 @@
-//your JS code here.
+const questionsElement = document.getElementById('questions');
+const submitButton = document.getElementById('submit');
+const scoreElement = document.getElementById('score');
 
-// Do not change code below this line
-// This code will just display the questions to the screen
+const userAnswers = JSON.parse(sessionStorage.getItem('quizAnswers')) || [];
+
+questionsElement.addEventListener('change', (event) => {
+    if (event.target.type === 'radio') {
+        const nameParts = event.target.name.split('-');
+        const questionIndex = parseInt(nameParts, 10);
+        userAnswers[questionIndex] = event.target.value;
+        sessionStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
+    }
+});
+
+if (submitButton) {
+    submitButton.addEventListener('click', () => {
+        let score = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (userAnswers[i] === questions[i].answer) {
+                score++;
+            }
+        }
+        if (scoreElement) {
+            scoreElement.textContent = `Your score is ${score} out of ${questions.length}.`;
+        }
+    });
+}
+
 const questions = [
   {
     question: "What is the capital of France?",
@@ -30,7 +55,6 @@ const questions = [
   },
 ];
 
-// Display the quiz questions and choices
 function renderQuestions() {
   for (let i = 0; i < questions.length; i++) {
     const question = questions[i];
